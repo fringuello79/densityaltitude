@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Density Altitude</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            text-align: center;
+        }
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 10px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+        }
+        header img {
+            max-width: 50px;
+            height: auto;
+            vertical-align: middle;
+        }
+        header h1 {
+            display: inline;
+            font-size: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        main {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            margin-left: 10px;
+            padding: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00509e;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logoACM.jpg" alt="Logo Aeroclub Dei Marsi">
+        <h1>Calcolo Density Altitude</h1>
+    </header>
+    <main>
+        <h2>Inserisci i dati per il calcolo</h2>
+        <div class="form-group">
+            <label for="temperature">Temperatura reale (°C):</label>
+            <input type="number" id="temperature" placeholder="Es. 15">
+        </div>
+        <div class="form-group">
+            <label for="altitude">Quota di decollo (piedi):</label>
+            <input type="number" id="altitude" value="2200">
+        </div>
+        <button onclick="calculateDA()">Calcola Density Altitude</button>
+        <div class="result" id="result"></div>
+    </main>
+    <script>
+        function calculateDA() {
+            const temperature = parseFloat(document.getElementById('temperature').value);
+            const altitude = parseFloat(document.getElementById('altitude').value);
+
+            if (isNaN(temperature) || isNaN(altitude)) {
+                alert("Inserisci valori validi per temperatura e quota di decollo.");
+                return;
+            }
+
+            // Calcolo della temperatura ISA (International Standard Atmosphere)
+            const isaTemp = 15 - (altitude / 1000) * 2;
+            const densityAltitude = altitude + (120 * (temperature - isaTemp));
+
+            document.getElementById('result').textContent = `Density Altitude: ${densityAltitude.toFixed(2)} piedi`;
+        }
+    </script>
+</body>
+</html>
